@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARIA - AI Super Agent</title>
+    <meta name="description" content="ARIA - Autonomous Reasoning & Intelligent Agent. Your Personal AI Operating System.">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 800px;
+        }
+        
+        .logo {
+            font-size: 100px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1 0%, #22d3ee 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            letter-spacing: -3px;
+        }
+        
+        .tagline {
+            font-size: 24px;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: #22d3ee;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 60px;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+        
+        .card {
+            background: rgba(30, 30, 46, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 32px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: #6366f1;
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+        
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .card-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .card-desc {
+            font-size: 15px;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 42px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1 0%, #22d3ee 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 14px 28px;
+            border-radius: 30px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .github-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .footer {
+            margin-top: 60px;
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .logo { font-size: 60px; }
+            .tagline { font-size: 18px; }
+            .stats { gap: 24px; }
+            .stat-value { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">ARIA</div>
+        <div class="tagline">Autonomous Reasoning & Intelligent Agent</div>
+        <div class="subtitle">AI Ideas Bootcamp - Super Agent Demo</div>
+        
+        <div class="cards">
+            <a href="presentation/index.html" class="card">
+                <div class="card-icon">🎯</div>
+                <div class="card-title">Presentation</div>
+                <div class="card-desc">Interactive slide deck explaining the architecture, agents, and how everything works together.</div>
+            </a>
+            
+            <a href="docs/ui-mockup.html" class="card">
+                <div class="card-icon">📱</div>
+                <div class="card-title">Mobile App Mockups</div>
+                <div class="card-desc">See how the ARIA app looks on Android & iOS with 6 interactive screen designs.</div>
+            </a>
+            
+            <a href="https://github.com/engomaressam/superapp" class="card">
+                <div class="card-icon">💻</div>
+                <div class="card-title">Source Code</div>
+                <div class="card-desc">Full codebase with FastAPI backend, React Native app, and 12 specialized agents.</div>
+            </a>
+        </div>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value">12</div>
+                <div class="stat-label">Agents</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">3</div>
+                <div class="stat-label">Integration Tiers</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">15K+</div>
+                <div class="stat-label">Lines of Code</div>
+            </div>
+        </div>
+        
+        <a href="https://github.com/engomaressam/superapp" class="github-link">
+            <svg height="24" width="24" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            View on GitHub
+        </a>
+        
+        <div class="footer">
+            Built with ❤️ for the AI Ideas Bootcamp
+        </div>
+    </div>
+</body>
+</html>
+
