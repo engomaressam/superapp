@@ -12,7 +12,7 @@
 
 **ARIA** is a next-generation **Large Action Model (LAM)** that transforms your smartphone into an intelligent personal assistant capable of executing real-world tasks autonomously.
 
-[📖 Architecture](#architecture) • [🚀 Quick Start](#quick-start) • [🔧 Configuration](#configuration) • [📱 Demo](#demo)
+[📖 Architecture](#architecture) • [🚀 Quick Start](#quick-start) • [🔧 Configuration](#configuration) • [📱 Demo](#demo) • [🎯 Presentation](presentation/index.html)
 
 </div>
 
@@ -88,7 +88,24 @@ ARIA implements a sophisticated **"Brain-Hand" Architecture** that separates rea
 
 ## 🧩 Multi-Agent Orchestration
 
-ARIA uses **Multi-Agent Orchestration** because a single AI cannot reliably handle complex, multi-domain requests. Each agent specializes in its domain:
+ARIA uses **Multi-Agent Orchestration** because a single AI cannot reliably handle complex, multi-domain requests. Each of the **12 specialized agents** handles its domain:
+
+### Agent Capabilities
+
+| Agent | Icon | Capabilities |
+|-------|------|--------------|
+| **Transport** | 🚗 | Uber/Lyft booking, ride tracking, fare estimation |
+| **Calendar** | 📅 | Events, scheduling, conflict detection, availability |
+| **Medical** | 🏥 | Doctor search, Vezeeta automation, appointment booking |
+| **Movie** | 🎬 | Movie search, showtimes, cinema locations, TMDB API |
+| **Reminder** | ⏰ | Notifications, recurring reminders, smart scheduling |
+| **Weather** | 🌤️ | Forecasts, alerts, activity recommendations |
+| **Food** | 🍕 | Restaurant search, food delivery (Talabat), reservations |
+| **Finance** | 💰 | Balance check, bill payment, transfers, budgeting |
+| **Shopping** | 🛒 | Product search, price comparison, order tracking |
+| **Smart Home** | 🏠 | Lights, AC, security, scenes, energy monitoring |
+| **Email** | 📧 | Inbox management, send/reply, AI summaries |
+| **Travel** | ✈️ | Flights, hotels, trip planning, itineraries |
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐

@@ -1,0 +1,804 @@
+<![CDATA[<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARIA - AI Super Agent Presentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --accent-primary: #6366f1;
+            --accent-secondary: #22d3ee;
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #22d3ee 100%);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: rgba(255,255,255,0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Slide Container */
+        .slides {
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            height: 100vh;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Navigation */
+        .nav {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .nav-dot:hover, .nav-dot.active {
+            background: var(--accent-primary);
+            transform: scale(1.3);
+        }
+        
+        /* Title Slide */
+        .slide-title {
+            background: radial-gradient(ellipse at top, #1a1a2e 0%, var(--bg-primary) 70%);
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 120px;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -4px;
+        }
+        
+        .tagline {
+            font-size: 32px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .subtitle {
+            font-size: 20px;
+            color: var(--accent-secondary);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+        
+        /* Section Titles */
+        h2 {
+            font-size: 56px;
+            margin-bottom: 40px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        h3 {
+            font-size: 28px;
+            color: var(--accent-secondary);
+            margin-bottom: 20px;
+        }
+        
+        p {
+            font-size: 22px;
+            color: var(--text-secondary);
+            max-width: 900px;
+        }
+        
+        /* Cards Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+        
+        .card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.1);
+        }
+        
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .card h4 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+        
+        .card p {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+        
+        /* Architecture Diagram */
+        .architecture {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            margin-top: 30px;
+        }
+        
+        .arch-layer {
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+        
+        .arch-layer h4 {
+            color: var(--accent-secondary);
+            margin-bottom: 10px;
+        }
+        
+        /* Code Block */
+        .code-block {
+            background: #1e1e2e;
+            border-radius: 12px;
+            padding: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+        }
+        
+        .code-block .comment { color: #6a9955; }
+        .code-block .keyword { color: #c586c0; }
+        .code-block .string { color: #ce9178; }
+        .code-block .function { color: #dcdcaa; }
+        .code-block .class { color: #4ec9b0; }
+        
+        /* Agent List */
+        .agent-list {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 30px;
+        }
+        
+        .agent-item {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+        
+        .agent-item:hover {
+            border-color: var(--accent-primary);
+            transform: scale(1.05);
+        }
+        
+        .agent-item .icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .agent-item .name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        /* Flow Diagram */
+        .flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .flow-item {
+            background: var(--bg-card);
+            padding: 20px 30px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        
+        .flow-arrow {
+            font-size: 24px;
+            color: var(--accent-primary);
+        }
+        
+        /* Stats */
+        .stats {
+            display: flex;
+            gap: 60px;
+            margin-top: 40px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 64px;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-label {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+        
+        /* Tier Comparison */
+        .tiers {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 30px;
+        }
+        
+        .tier {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .tier-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .tier-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        .tier-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .tier ul {
+            list-style: none;
+            color: var(--text-secondary);
+        }
+        
+        .tier li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .tier li:last-child {
+            border: none;
+        }
+        
+        /* Demo Section */
+        .demo-box {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            margin-top: 30px;
+        }
+        
+        .demo-conversation {
+            max-width: 600px;
+        }
+        
+        .message {
+            padding: 16px 20px;
+            border-radius: 16px;
+            margin: 12px 0;
+            max-width: 80%;
+        }
+        
+        .message.user {
+            background: var(--accent-primary);
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message.aria {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-bottom-left-radius: 4px;
+        }
+        
+        /* Footer */
+        .slide-footer {
+            position: absolute;
+            bottom: 30px;
+            left: 100px;
+            right: 100px;
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        /* Background Effects */
+        .bg-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .bg-glow-1 { top: -200px; right: -200px; }
+        .bg-glow-2 { bottom: -200px; left: -200px; }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .slide { padding: 40px 60px; }
+            h2 { font-size: 42px; }
+            .logo { font-size: 80px; }
+            .agent-list { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-dot active" data-slide="0"></div>
+        <div class="nav-dot" data-slide="1"></div>
+        <div class="nav-dot" data-slide="2"></div>
+        <div class="nav-dot" data-slide="3"></div>
+        <div class="nav-dot" data-slide="4"></div>
+        <div class="nav-dot" data-slide="5"></div>
+        <div class="nav-dot" data-slide="6"></div>
+        <div class="nav-dot" data-slide="7"></div>
+        <div class="nav-dot" data-slide="8"></div>
+    </nav>
+
+    <div class="slides">
+        <!-- Slide 1: Title -->
+        <section class="slide slide-title">
+            <div class="bg-glow bg-glow-1"></div>
+            <div class="bg-glow bg-glow-2"></div>
+            <div class="logo-container animate">
+                <div class="logo">ARIA</div>
+                <div class="tagline">Autonomous Reasoning & Intelligent Agent</div>
+            </div>
+            <p class="subtitle animate" style="animation-delay: 0.3s;">AI Ideas Bootcamp - Super Agent Demo</p>
+            <div class="slide-footer">
+                <span>December 2024</span>
+                <span>Press ↓ or scroll to navigate</span>
+            </div>
+        </section>
+
+        <!-- Slide 2: The Vision -->
+        <section class="slide">
+            <h2 class="animate">The Vision</h2>
+            <p class="animate" style="animation-delay: 0.2s;">
+                What if your phone could do things <em>for</em> you, not just <em>with</em> you?
+            </p>
+            <div class="demo-box animate" style="animation-delay: 0.4s;">
+                <div class="demo-conversation">
+                    <div class="message user">
+                        "Find me a dermatologist for tomorrow, book the appointment, and arrange an Uber to get there"
+                    </div>
+                    <div class="message aria">
+                        🧠 Breaking down your request...<br><br>
+                        ✅ Calendar: Tomorrow 2-6 PM is free<br>
+                        ✅ Medical: Dr. Sarah available at 3:30 PM<br>
+                        ✅ Transport: Uber pickup at 3:00 PM ($12)<br><br>
+                        Ready to book everything?
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>ARIA - Super Agent</span>
+                <span>2 / 9</span>
+            </div>
+        </section>
+
+        <!-- Slide 3: Key Concept -->
+        <section class="slide">
+            <h2 class="animate">From Chatbot to Action Model</h2>
+            <div class="grid animate" style="animation-delay: 0.2s;">
+                <div class="card">
+                    <div class="card-icon">💬</div>
+                    <h4>Traditional Chatbots</h4>
+                    <p>Understand language and provide information. User must act on responses.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🤖</div>
+                    <h4>Large Action Models</h4>
+                    <p>Understand intent AND execute real-world actions autonomously with user permission.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧠</div>
+                    <h4>ARIA's Approach</h4>
+                    <p>Multi-agent orchestration that breaks complex requests into specialized tasks.</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>ARIA - Super Agent</span>
+                <span>3 / 9</span>
+            </div>
+        </section>
+
+        <!-- Slide 4: Architecture -->
+        <section class="slide">
+            <h2 class="animate">Brain-Hand Architecture</h2>
+            <div class="architecture animate" style="animation-delay: 0.2s;">
+                <div class="arch-layer">
+                    <h4>🧠 THE BRAIN (Reasoning Engine)</h4>
+                    <p>LLM-powered intent recognition → Task planning → Decision making</p>
+                </div>
+                <div class="arch-layer">
+                    <h4>🎯 THE ORCHESTRATOR (LangGraph)</h4>
+                    <p>State machine → Agent routing → Result aggregation → Context memory</p>
+                </div>
+                <div class="arch-layer">
+                    <h4>🖐️ THE HANDS (Specialized Agents)</h4>
+                    <p>Transport • Calendar • Medical • Food • Finance • Shopping • Smart Home • Email • Travel</p>
+                </div>
+                <div class="arch-layer">
+                    <h4>🔌 INTEGRATION TIERS</h4>
+                    <p>Tier 1: Direct APIs → Tier 2: Web Automation → Tier 3: Device Control</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>ARIA - Super Agent</span>
+                <span>4 / 9</span>
+            </div>
+        </section>
+
+        <!-- Slide 5: All Agents -->
+        <section class="slide">
+            <h2 class="animate">12 Specialized Agents</h2>
+            <div class="agent-list animate" style="animation-delay: 0.2s;">
+                <div class="agent-item">
+                    <div class="icon">🚗</div>
+                    <div class="name">Transport</div>
+                </div>
+                <div class="agent-item">
+                    <div class="icon">📅</div>
+                    <div class="name">Calendar</div>
+                </div>
+                <div class="agent-item">
+                    <div class="icon">🏥</div>
+                    <div class="name">Medical</div>
+                </div>
+                <div class="agent-item">
+                    <div class="icon">🎬</div>
+                    <div class="name">Movie</div>
+                </div>
+                <div class="agent-item">
+                    <div class="icon">⏰</div>
+                    <div class="name">Reminder</div>
+                </div>
+                <div class="agent-item">
+                    <div class="icon">🌤️</div>
+                    <div class="name">Weather</div>
+                </div>
+                <div class="agent-item">
+                    <div class="icon">🍕</div>
+                    <div class="name">Food</div>
+                </div>
+                <div class="agent-item">
+                    <div class="icon">💰</div>
+                    <div class="name">Finance</div>
+                </div>
+                <div class="agent-item">
+                    <div class="icon">🛒</div>
+                    <div class="name">Shopping</div>
+                </div>
+                <div class="agent-item">
+                    <div class="icon">🏠</div>
+                    <div class="name">Smart Home</div>
+                </div>
+                <div class="agent-item">
+                    <div class="icon">📧</div>
+                    <div class="name">Email</div>
+                </div>
+                <div class="agent-item">
+                    <div class="icon">✈️</div>
+                    <div class="name">Travel</div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>ARIA - Super Agent</span>
+                <span>5 / 9</span>
+            </div>
+        </section>
+
+        <!-- Slide 6: Integration Tiers -->
+        <section class="slide">
+            <h2 class="animate">3-Tier Integration Strategy</h2>
+            <div class="tiers animate" style="animation-delay: 0.2s;">
+                <div class="tier">
+                    <div class="tier-header">
+                        <div class="tier-number">1</div>
+                        <div class="tier-title">Direct APIs</div>
+                    </div>
+                    <ul>
+                        <li>⚡ Fastest & most reliable</li>
+                        <li>🚗 Uber / Lyft APIs</li>
+                        <li>📅 Google Calendar API</li>
+                        <li>🎬 TMDB Movie API</li>
+                        <li>💳 Payment Gateways</li>
+                    </ul>
+                </div>
+                <div class="tier">
+                    <div class="tier-header">
+                        <div class="tier-number">2</div>
+                        <div class="tier-title">Web Automation</div>
+                    </div>
+                    <ul>
+                        <li>🌐 Playwright browser control</li>
+                        <li>🏥 Vezeeta appointments</li>
+                        <li>🍕 Restaurant bookings</li>
+                        <li>🎫 Ticket purchases</li>
+                        <li>📝 Form submissions</li>
+                    </ul>
+                </div>
+                <div class="tier">
+                    <div class="tier-header">
+                        <div class="tier-number">3</div>
+                        <div class="tier-title">Device Control</div>
+                    </div>
+                    <ul>
+                        <li>📱 Android Accessibility API</li>
+                        <li>🍎 iOS Shortcuts</li>
+                        <li>🏠 Smart Home protocols</li>
+                        <li>👁️ Screen reading</li>
+                        <li>👆 UI interaction</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>ARIA - Super Agent</span>
+                <span>6 / 9</span>
+            </div>
+        </section>
+
+        <!-- Slide 7: Multi-Agent Flow -->
+        <section class="slide">
+            <h2 class="animate">Multi-Agent Orchestration</h2>
+            <div class="flow animate" style="animation-delay: 0.2s;">
+                <div class="flow-item">
+                    <strong>User Request</strong><br>
+                    <small>"Book doctor & ride"</small>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">
+                    <strong>Dispatcher</strong><br>
+                    <small>Parse & Plan</small>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">
+                    <strong>Parallel Agents</strong><br>
+                    <small>🏥 + 🚗 + 📅</small>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">
+                    <strong>Aggregator</strong><br>
+                    <small>Combine Results</small>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">
+                    <strong>Response</strong><br>
+                    <small>Confirmation</small>
+                </div>
+            </div>
+            <div class="code-block animate" style="animation-delay: 0.4s;">
+<span class="comment"># LangGraph State Machine</span>
+workflow = <span class="class">StateGraph</span>(<span class="class">AgentState</span>)
+workflow.<span class="function">add_node</span>(<span class="string">"dispatcher"</span>, dispatcher_agent)
+workflow.<span class="function">add_node</span>(<span class="string">"calendar"</span>, calendar_agent)
+workflow.<span class="function">add_node</span>(<span class="string">"medical"</span>, medical_agent)
+workflow.<span class="function">add_node</span>(<span class="string">"transport"</span>, transport_agent)
+workflow.<span class="function">add_conditional_edges</span>(<span class="string">"dispatcher"</span>, route_to_agents)
+            </div>
+            <div class="slide-footer">
+                <span>ARIA - Super Agent</span>
+                <span>7 / 9</span>
+            </div>
+        </section>
+
+        <!-- Slide 8: Security -->
+        <section class="slide">
+            <h2 class="animate">Privacy-First Design</h2>
+            <div class="grid animate" style="animation-delay: 0.2s;">
+                <div class="card">
+                    <div class="card-icon">🔒</div>
+                    <h4>PII Sanitization</h4>
+                    <p>Names, phones, cards are masked before reaching the LLM. Restored only in final response.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🛡️</div>
+                    <h4>Permission Levels</h4>
+                    <p>4-tier permission model from read-only to full autonomy with spending limits.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">✅</div>
+                    <h4>Human-in-the-Loop</h4>
+                    <p>Critical actions require explicit user confirmation before execution.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📋</div>
+                    <h4>Audit Logging</h4>
+                    <p>Every action is logged with full traceability for security and debugging.</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>ARIA - Super Agent</span>
+                <span>8 / 9</span>
+            </div>
+        </section>
+
+        <!-- Slide 9: Tech Stack & Summary -->
+        <section class="slide">
+            <h2 class="animate">Technology Stack</h2>
+            <div class="stats animate" style="animation-delay: 0.2s;">
+                <div class="stat">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Specialized Agents</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Integration Tiers</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">50+</div>
+                    <div class="stat-label">Files & Docs</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">12K+</div>
+                    <div class="stat-label">Lines of Code</div>
+                </div>
+            </div>
+            <div class="grid animate" style="animation-delay: 0.4s; margin-top: 40px;">
+                <div class="card">
+                    <h4>🐍 Backend</h4>
+                    <p>FastAPI • LangGraph • Playwright • PostgreSQL • Redis</p>
+                </div>
+                <div class="card">
+                    <h4>📱 Mobile</h4>
+                    <p>React Native • Expo • TypeScript • WebSocket</p>
+                </div>
+                <div class="card">
+                    <h4>🤖 AI</h4>
+                    <p>GPT-4 / Claude • LangChain • Vector DB • NER</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>github.com/engomaressam/superapp</span>
+                <span>Thank You! 🚀</span>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Navigation
+        const slides = document.querySelector('.slides');
+        const dots = document.querySelectorAll('.nav-dot');
+        
+        slides.addEventListener('scroll', () => {
+            const slideHeight = window.innerHeight;
+            const currentSlide = Math.round(slides.scrollTop / slideHeight);
+            
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        });
+        
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const slideIndex = parseInt(dot.dataset.slide);
+                slides.scrollTo({
+                    top: slideIndex * window.innerHeight,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const slideHeight = window.innerHeight;
+            const currentSlide = Math.round(slides.scrollTop / slideHeight);
+            
+            if (e.key === 'ArrowDown' || e.key === ' ') {
+                e.preventDefault();
+                slides.scrollTo({
+                    top: (currentSlide + 1) * slideHeight,
+                    behavior: 'smooth'
+                });
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                slides.scrollTo({
+                    top: (currentSlide - 1) * slideHeight,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+]]>
