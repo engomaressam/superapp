@@ -1,0 +1,121 @@
+<![CDATA[# ARIA Docker Compose Configuration
+# Run: docker-compose up -d
+
+version: '3.8'
+
+services:
+  # ===========================================
+  # Backend API Server
+  # ===========================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: aria-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+      - DEBUG=true
+      - DATABASE_URL=postgresql+asyncpg://aria:aria_password@postgres:5432/aria
+      - REDIS_URL=redis://redis:6379
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - aria-network
+
+  # ===========================================
+  # PostgreSQL Database
+  # ===========================================
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: aria-postgres
+    environment:
+      POSTGRES_USER: aria
+      POSTGRES_PASSWORD: aria_password
+      POSTGRES_DB: aria
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/scripts/init_db.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aria -d aria"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - aria-network
+
+  # ===========================================
+  # Redis Cache
+  # ===========================================
+  redis:
+    image: redis:7-alpine
+    container_name: aria-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    command: redis-server --appendonly yes
+    networks:
+      - aria-network
+
+  # ===========================================
+  # Browser Automation Service (Playwright)
+  # ===========================================
+  browserless:
+    image: browserless/chrome:latest
+    container_name: aria-browserless
+    ports:
+      - "3001:3000"
+    environment:
+      - MAX_CONCURRENT_SESSIONS=10
+      - CONNECTION_TIMEOUT=300000
+      - MAX_QUEUE_LENGTH=20
+    shm_size: 2gb
+    networks:
+      - aria-network
+
+  # ===========================================
+  # Adminer (Database Management UI)
+  # ===========================================
+  adminer:
+    image: adminer
+    container_name: aria-adminer
+    ports:
+      - "8080:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+    depends_on:
+      - postgres
+    networks:
+      - aria-network
+
+# ===========================================
+# Networks
+# ===========================================
+networks:
+  aria-network:
+    driver: bridge
+
+# ===========================================
+# Volumes
+# ===========================================
+volumes:
+  postgres_data:
+  redis_data:
+]]>

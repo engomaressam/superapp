@@ -1,0 +1,142 @@
+<![CDATA[# ===========================================
+# ARIA .gitignore
+# ===========================================
+
+# ===========================================
+# Python
+# ===========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Mypy
+.mypy_cache/
+
+# Ruff
+.ruff_cache/
+
+# ===========================================
+# Node.js / React Native
+# ===========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Expo
+.expo/
+dist/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+
+# Metro bundler
+.metro-health-check*
+
+# ===========================================
+# IDE / Editors
+# ===========================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ===========================================
+# Environment / Secrets
+# ===========================================
+.env
+.env.local
+.env.*.local
+*.pem
+secrets/
+credentials/
+
+# ===========================================
+# Docker
+# ===========================================
+.docker/
+
+# ===========================================
+# Logs
+# ===========================================
+logs/
+*.log
+
+# ===========================================
+# Database
+# ===========================================
+*.db
+*.sqlite
+*.sqlite3
+
+# ===========================================
+# Testing
+# ===========================================
+coverage/
+.nyc_output/
+
+# ===========================================
+# Build artifacts
+# ===========================================
+*.exe
+*.dll
+*.dylib
+*.jar
+*.war
+
+# ===========================================
+# Playwright
+# ===========================================
+playwright-report/
+playwright/.cache/
+test-results/
+
+# ===========================================
+# Misc
+# ===========================================
+*.bak
+*.tmp
+*.temp
+.cache/
+]]>
